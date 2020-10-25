@@ -74,6 +74,8 @@ sudo chown -R www-data:www-data /var/www
 
 ### htaccess
 
+<https://www.youtube.com/watch?v=V91ffS0yiN0&ab_channel=RankYa>
+
 The .htaccess is a distributed configuration file, and is how Apache handles configuration changes on a per-directory basis.
 
 WordPress uses this file to manipulate how Apache serves files from its root directory, and subdirectories thereof. Most notably, WP modifies this file to be able to handle pretty permalinks.
@@ -93,7 +95,7 @@ RewriteRule . /index.php [L]
 # END WordPress
 ```
 
-or
+or if your site uses https:
 
 ```
 <IfModlue mod_rewrite.c>
@@ -109,3 +111,48 @@ RewriteRule . /index.php [L]
 
 # END WordPress
 ```
+
+Used for wordpress permalink access
+
+
+#### Redirect
+
+e.g.
+
+```dot
+Redirect 301 /shoop/cart/ https://wplearninglab.com/cart/
+```
+
+`Redirect <status> <path past the domain name> <where to redirect to>` 
+
+##### redirect for all request made to http
+
+```
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+```
+
+#### Charset
+
+```
+AddDefaultCharste utf-8
+```
+
+#### Keep Header alive
+
+keep alive same connect request instead of resending each HTTP requests
+
+```
+<ifModule mod_headers.c>
+Header set Connection keep-alive
+</ifModlue>
+```
+
+#### Cross Origin
+
+> Important for using Google Fonts ,  empeded Images/Videos , stylesheets, scripts iframes and some Plugins etc.
+
+```
+<IfModule mod_hearders.c>
+    Header set Access-Control-Allow_origin "*"
+</IfModule>
+``` 
