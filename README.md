@@ -13,6 +13,8 @@ or install a LAMP Stack:
 sudo apt-get install apache2 libapache2-mod-php php php-mysql mysql-server 
 ```
 
+<https://wiki.ubuntuusers.de/LAMP/>
+
 **libapache2-mod-php** is providing the PHP-Module for the apache2-webserver
 
 **php-mysql** 
@@ -52,7 +54,7 @@ Delete this file to make sure Outsiders can not inspect your settings.
 sudo chown -R www-data:www-data /var/www
 ```
 
-## 
+## 000-default.conf
 
 > /etc/apache2/sites-available/000-default.conf
 
@@ -66,3 +68,44 @@ sudo chown -R www-data:www-data /var/www
 ```
 
 <kbd>alt</kbd> + <kbd>t</kbd>
+
+
+## Wordpress
+
+### htaccess
+
+The .htaccess is a distributed configuration file, and is how Apache handles configuration changes on a per-directory basis.
+
+WordPress uses this file to manipulate how Apache serves files from its root directory, and subdirectories thereof. Most notably, WP modifies this file to be able to handle pretty permalinks.
+
+create a .htaccess file inside the root folder of your wordpress dir
+
+```
+# BEGIN WordPress
+
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+# END WordPress
+```
+
+or
+
+```
+<IfModlue mod_rewrite.c>
+# BEGIN WordPress
+
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModlue>
+
+# END WordPress
+```
