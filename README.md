@@ -7,7 +7,7 @@
 sudo apt-get install apache2
 ```
 
-or 
+or install a LAMP Stack:
 
 ```bash
 sudo apt-get install apache2 libapache2-mod-php php php-mysql mysql-server 
@@ -34,7 +34,17 @@ The content of the server will be saved in the "document root". wich depending o
 
 ## Initialize phpinfo
 
-create the **phpinfo.php** in the "document root" and 
+create the **phpinfo.php** in the "document root" and insert:
+
+```php
+<?php
+phpinfo();
+?>
+```
+
+insert `http://localhost/phpinfo` into the browser to see all information about the PHP Version and Settings.
+
+Delete this file to make sure Outsiders can not inspect your settings.
 
 ## Change Owner
 
