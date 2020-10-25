@@ -49,8 +49,8 @@ Delete this file to make sure Outsiders can not inspect your settings.
 ## Change Owner
 
 ```bash
- sudo chown -R www-data:www-data /var/www
- ```
+sudo chown -R www-data:www-data /var/www
+```
 
 ## 
 
