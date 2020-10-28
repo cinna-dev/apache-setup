@@ -156,3 +156,19 @@ Header set Connection keep-alive
     Header set Access-Control-Allow_origin "*"
 </IfModule>
 ``` 
+
+### www-data
+
+#### Add User to www-data Group
+
+For being able to login via FTP , edit file , upload files , create Folders and what not...
+
+```bash
+sudo usermod -a -G www-data <User>
+```
+
+confirm `<User>` is part of www-data Group
+
+```bash
+groups <User>
+```
