@@ -1,17 +1,16 @@
 # Apache-setup
 
-
 ## Directory
 
-- [Installation](#installation)
+-   [Installation](#installation)
 
-- [Htaccess](#htaccess)
+-   [Htaccess](#htaccess)
 
-    - [Deny Access](#deny-access)
+    -   [Deny Access](#deny-access)
 
-    - [Wordpress](#wordpress)
+    -   [Wordpress](#wordpress)
 
-    - [Rewrites](#rewrites)
+    -   [Rewrites](#rewrites)
 
 ## Installation
 
@@ -22,20 +21,19 @@ sudo apt-get install apache2
 or install a LAMP Stack:
 
 ```bash
-sudo apt-get install apache2 libapache2-mod-php php php-mysql mysql-server 
+sudo apt-get install apache2 libapache2-mod-php php php-mysql mysql-server
 ```
 
 <https://wiki.ubuntuusers.de/LAMP/>
 
 **libapache2-mod-php** is providing the PHP-Module for the apache2-webserver
 
-**php-mysql** 
-
+**php-mysql**
 
 ## Starting the Server
 
 ```bash
-sudo systemctl start apache2 
+sudo systemctl start apache2
 ```
 
 Once started the server will allways run when the pc is running
@@ -81,8 +79,6 @@ sudo chown -R www-data:www-data /var/www
 
 <kbd>alt</kbd> + <kbd>t</kbd>
 
-
-
 ## htaccess
 
 ### Deny Access
@@ -96,7 +92,7 @@ deny from all
 
 logs down for the entire server.
 
-*If you find any files with .cms , .json , .log , deny access*
+_If you find any files with .cms , .json , .log , deny access_
 
 ### Wordpress
 
@@ -140,7 +136,6 @@ RewriteRule . /index.php [L]
 
 Used for wordpress permalink access
 
-
 #### Redirect
 
 e.g.
@@ -149,7 +144,7 @@ e.g.
 Redirect 301 /shoop/cart/ https://wplearninglab.com/cart/
 ```
 
-`Redirect <status> <path past the domain name> <where to redirect to>` 
+`Redirect <status> <path past the domain name> <where to redirect to>`
 
 ##### redirect for all request made to http
 
@@ -175,7 +170,7 @@ Header set Connection keep-alive
 
 ### Cross Origin
 
-> Important for using Google Fonts ,  empeded Images/Videos , stylesheets, scripts iframes and some Plugins etc.
+> Important for using Google Fonts , empeded Images/Videos , stylesheets, scripts iframes and some Plugins etc.
 
 ##### Cross Oringin Headers
 
@@ -183,7 +178,7 @@ Header set Connection keep-alive
 <IfModule mod_hearders.c>
     Header set Access-Control-Allow-origin "*"
 </IfModule>
-``` 
+```
 
 ##### Cross Oringin Images
 
@@ -200,7 +195,7 @@ send the CORS headers for images when browsing request ist.
 </IfModule>
 ```
 
-*allows the server to access these files form an external domain*
+_allows the server to access these files form an external domain_
 
 ##### Cross Origin Web Fonds
 
@@ -212,7 +207,7 @@ send the CORS headers for images when browsing request ist.
 </IfModule>
 ```
 
-*Allow cross-origin access to web fonts.*
+_Allow cross-origin access to web fonts._
 
 ##### Errors
 
@@ -220,7 +215,7 @@ send the CORS headers for images when browsing request ist.
 ErrorDocument 404 /404.html
 ```
 
-*Customize what Apache returns to the client in case of an error.*
+_Customize what Apache returns to the client in case of an error._
 
 ##### Error prevention
 
@@ -228,9 +223,9 @@ ErrorDocument 404 /404.html
 Options -MultiViews
 ```
 
-*Disable the pattern matching based on filenames.*
-*This setting prevents Apache from returning a 404 error as the result of a*
-*rewrite when the directory with the same name does not exist.*
+_Disable the pattern matching based on filenames._
+_This setting prevents Apache from returning a 404 error as the result of a_
+_rewrite when the directory with the same name does not exist._
 
 ##### Document Modes
 
@@ -240,18 +235,17 @@ Options -MultiViews
 </IfModule>
 ```
 
-*Forces IE to use there latest engine*
-*Force Internet Explorer 8/9/10 to render pages in the highest mode*
-*available in various cases when it may not.*
+_Forces IE to use there latest engine_
+_Force Internet Explorer 8/9/10 to render pages in the highest mode_
+_available in various cases when it may not._
 
 ##### Media Types
 
-*Serve resources with the proper media types (f.k.a.[^1] MIME types [^2]).*
-*File extension does not necessary tell you the real file type*
-*Media type does*
+_Serve resources with the proper media types (f.k.a.[^1] MIME types [^2])._
+_File extension does not necessary tell you the real file type_
+_Media type does_
 <br>
-*Most moddern **Web Hosts** will have this in there server configs though*
-
+_Most moddern **Web Hosts** will have this in there server configs though_
 
 ```apacheconf
 <IfModule mod_mime.c>
@@ -335,13 +329,12 @@ Options -MultiViews
 
 ##### Character encodings
 
-
 ```apacheconf
 AddDefaultCharset utf-8
 ```
 
-*Serve all resources labeled as `text/html` or `text/plain` with the media type*
-*`charset` parameter set to `UTF-8`.*
+_Serve all resources labeled as `text/html` or `text/plain` with the media type_
+_`charset` parameter set to `UTF-8`._
 
 ```apacheconf
 <IfModule mod_mime.c>
@@ -366,28 +359,27 @@ AddDefaultCharset utf-8
 </IfModule>
 ```
 
-*Serve the following file types with the media type `charset` parameter set to*
-*`UTF-8`.*
+_Serve the following file types with the media type `charset` parameter set to_
+_`UTF-8`._
 
 ### Rewrites
 
 **Rewrite engine**
 
+(1) Turn on the rewrite engine (this is necessary in order for the
+`RewriteRule` directives to work).
 
- (1) Turn on the rewrite engine (this is necessary in order for the
-     `RewriteRule` directives to work).
+(2) Enable the `FollowSymLinks` option if it isn't already.
 
- (2) Enable the `FollowSymLinks` option if it isn't already.
+(3) If your web host doesn't allow the `FollowSymlinks` option, you need to
+comment it out or remove it, and then uncomment the
+`Options +SymLinksIfOwnerMatch` line (4), but be aware of the performance
+impact.
 
- (3) If your web host doesn't allow the `FollowSymlinks` option, you need to
-     comment it out or remove it, and then uncomment the
-     `Options +SymLinksIfOwnerMatch` line (4), but be aware of the performance
-     impact.
+(4) Some cloud hosting services will require you set `RewriteBase`.
 
- (4) Some cloud hosting services will require you set `RewriteBase`.
-
- (5) Depending on how your server is set up, you may also need to use the
-     `RewriteOptions` directive to enable some options for the rewrite engine.
+(5) Depending on how your server is set up, you may also need to use the
+`RewriteOptions` directive to enable some options for the rewrite engine.
 
 ```apacheconf
 <IfModule mod_rewrite.c>
@@ -410,7 +402,7 @@ AddDefaultCharset utf-8
 </IfModule>
 ```
 
-*Uncomment to activate Option*
+_Uncomment to activate Option_
 
 #### Forcing `https://`
 
@@ -428,27 +420,27 @@ Redirect from the `http://` to the `https://` version of the URL.
  </IfModule>
 ```
 
-*(1) If you're using cPanel AutoSSL or the Let's Encrypt webroot method it*
-    *will fail to validate the certificate if validation requests are redirected to HTTPS. Turn on the condition(s) you need.*
+_(1) If you're using cPanel AutoSSL or the Let's Encrypt webroot method it_
+_will fail to validate the certificate if validation requests are redirected to HTTPS. Turn on the condition(s) you need._
 
 #### Suppressing the `www.` at the beginning of URLs
 
 Rewrite www.example.com → example.com
 
- The same content should never be available under two different URLs,
- especially not with and without `www.` at the beginning.
- This can cause SEO problems (duplicate content), and therefore, you should
- choose one of the alternatives and redirect the other one.
+The same content should never be available under two different URLs,
+especially not with and without `www.` at the beginning.
+This can cause SEO problems (duplicate content), and therefore, you should
+choose one of the alternatives and redirect the other one.
 
- (!) NEVER USE BOTH WWW-RELATED RULES AT THE SAME TIME!
+(!) NEVER USE BOTH WWW-RELATED RULES AT THE SAME TIME!
 
- (1) Set %{ENV:PROTO} variable, to allow rewrites to redirect with the
-     appropriate schema automatically (http or https).
+(1) Set %{ENV:PROTO} variable, to allow rewrites to redirect with the
+appropriate schema automatically (http or https).
 
- (2) The rule assumes by default that both HTTP and HTTPS environments are
-     available for redirection.
-     If your SSL certificate could not handle one of the domains used during
-     redirection, you should turn the condition on.
+(2) The rule assumes by default that both HTTP and HTTPS environments are
+available for redirection.
+If your SSL certificate could not handle one of the domains used during
+redirection, you should turn the condition on.
 
 ```apacheconf
 <IfModule mod_rewrite.c>
@@ -482,12 +474,12 @@ choose one of the alternatives and redirect the other one.
 (!) NEVER USE BOTH WWW-RELATED RULES AT THE SAME TIME!
 
 (1) Set %{ENV:PROTO} variable, to allow rewrites to redirect with the
-    appropriate schema automatically (http or https).
+appropriate schema automatically (http or https).
 
 (2) The rule assumes by default that both HTTP and HTTPS environments are
-    available for redirection.
-    If your SSL certificate could not handle one of the domains used during
-    redirection, you should turn the condition on.
+available for redirection.
+If your SSL certificate could not handle one of the domains used during
+redirection, you should turn the condition on.
 
 Be aware that the following might not be a good idea if you use "real"
 subdomains for certain parts of your website.
@@ -520,9 +512,9 @@ subdomains for certain parts of your website.
 
 Block access to directories without a default document.
 
- You should leave the following uncommented, as you shouldn't allow anyone to
- surf through every directory on your server (which may include rather
- private places such as the CMS's directories).
+You should leave the following uncommented, as you shouldn't allow anyone to
+surf through every directory on your server (which may include rather
+private places such as the CMS's directories).
 
 ```apacheconf
 <IfModule mod_autoindex.c>
@@ -554,6 +546,95 @@ should not be blocked.
 </IfModule>
 ```
 
+## WEB PERFORMANCE
+
+### Compression
+
+compress files before they are send down to client
+
+```apacheconf
+<IfModule mod_deflate.c>
+
+    # Force compression for mangled `Accept-Encoding` request headers
+    #
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding
+    # https://calendar.perfplanet.com/2010/pushing-beyond-gzipping/
+
+    <IfModule mod_setenvif.c>
+        <IfModule mod_headers.c>
+            SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+            RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+        </IfModule>
+    </IfModule>
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Compress all output labeled with one of the following media types.
+    #
+    # https://httpd.apache.org/docs/current/mod/mod_filter.html#addoutputfilterbytype
+
+    <IfModule mod_filter.c>
+        AddOutputFilterByType DEFLATE "application/atom+xml" \
+                                      "application/javascript" \
+                                      "application/json" \
+                                      "application/ld+json" \
+                                      "application/manifest+json" \
+                                      "application/rdf+xml" \
+                                      "application/rss+xml" \
+                                      "application/schema+json" \
+                                      "application/geo+json" \
+                                      "application/vnd.ms-fontobject" \
+                                      "application/wasm" \
+                                      "application/x-font-ttf" \
+                                      "application/x-javascript" \
+                                      "application/x-web-app-manifest+json" \
+                                      "application/xhtml+xml" \
+                                      "application/xml" \
+                                      "font/eot" \
+                                      "font/opentype" \
+                                      "font/otf" \
+                                      "font/ttf" \
+                                      "image/bmp" \
+                                      "image/svg+xml" \
+                                      "image/vnd.microsoft.icon" \
+                                      "text/cache-manifest" \
+                                      "text/calendar" \
+                                      "text/css" \
+                                      "text/html" \
+                                      "text/javascript" \
+                                      "text/plain" \
+                                      "text/markdown" \
+                                      "text/vcard" \
+                                      "text/vnd.rim.location.xloc" \
+                                      "text/vtt" \
+                                      "text/x-component" \
+                                      "text/x-cross-domain-policy" \
+                                      "text/xml"
+
+    </IfModule>
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Map the following filename extensions to the specified encoding type in
+    # order to make Apache serve the file types with the appropriate
+    # `Content-Encoding` response header (do note that this will NOT make
+    # Apache compress them!).
+    #
+    # If these files types would be served without an appropriate
+    # `Content-Encoding` response header, client applications (e.g.: browsers)
+    # wouldn't know that they first need to uncompress the response, and thus,
+    # wouldn't be able to understand the content.
+    #
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding
+    # https://httpd.apache.org/docs/current/mod/mod_mime.html#addencoding
+
+    <IfModule mod_mime.c>
+        AddEncoding gzip              svgz
+    </IfModule>
+
+</IfModule>
+```
+
 ### www-data
 
 #### Add User to www-data Group
@@ -576,7 +657,7 @@ htaccess
 
 **html5 boilerplate**
 <https://github.com/h5bp/html5-boilerplate>
-*dist/.htaccess*
+_dist/.htaccess_
 
 **Weaver Tips**
 <https://weaver.tips/tag/htacess>
@@ -584,10 +665,9 @@ htaccess
 **htaccess tester**
 <https://htaccess.madewithlove.be/>
 
+[^1] _formally known as_
 
-[^1] *formally known as*
-
-[^2] A **media type** (also known as a **Multipurpose Internet Mail Extensions** or MIME type) is a standard that indicates the nature and format of a document, file, or assortment of bytes. It is defined and standardized in IETF's RFC 6838. 
+[^2] A **media type** (also known as a **Multipurpose Internet Mail Extensions** or MIME type) is a standard that indicates the nature and format of a document, file, or assortment of bytes. It is defined and standardized in IETF's RFC 6838.
 
 The simplest MIME type consists of a type and a subtype; these are each strings which, when concatenated with a slash (/) between them, comprise a MIME type. No whitespace is allowed in a MIME type:
 
