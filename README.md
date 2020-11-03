@@ -757,6 +757,8 @@ should consider lowering the cache times to something like one week.
 
 ---
 
+## Tipps
+
 ### RedirectMatch
 
 ```apacheconf
@@ -773,6 +775,34 @@ RedirectMatch 301 /download/theme https://somelink-to-download
 ```
 
 *redirect from the "pretty path" to the actual download*
+
+### Redirect 404 with <base>
+
+```apacheconf
+ErrorDocument 404 /404/
+```
+
+*When entering a non existent URL, Visitor will stay on that URL but the /404/ dir page will be displayed.*
+
+*However linked content, like pictures on this page will fail as the URL is in fact wrong*
+
+```html
+<head>
+  <base href="https://www.mysite.com/404/">
+</head>
+```
+
+*Adding a Base Tag to this Page can circumvent this issue by giving a base URL*
+
+*Base URL informs the browser where this page resides and where it should based all the path for all the files from (relative URL)*
+
+```html
+<head>
+  <base href="auto-detect-on-publish">
+</head>
+```
+
+***auto-detect-on-publish** is also possible???*
 
 ### www-data
 
