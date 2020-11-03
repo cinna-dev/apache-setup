@@ -776,7 +776,7 @@ RedirectMatch 301 /download/theme https://somelink-to-download
 
 *redirect from the "pretty path" to the actual download*
 
-### Redirect 404 with <base>
+### Redirect 404 with `<base>`
 
 ```apacheconf
 ErrorDocument 404 /404/
