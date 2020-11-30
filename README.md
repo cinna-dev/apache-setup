@@ -81,6 +81,21 @@ sudo chown -R www-data:www-data /var/www
 
 <kbd>alt</kbd> + <kbd>t</kbd>
 
+### www-data
+
+#### Add User to www-data Group
+
+For being able to login via FTP , edit file , upload files , create Folders and what not...
+
+```bash
+sudo usermod -a -G www-data <User>
+```
+
+confirm `<User>` is part of www-data Group
+
+```bash
+groups <User>
+```
 ## htaccess
 
 ### Deny Access
@@ -137,6 +152,16 @@ RewriteRule . /index.php [L]
 ```
 
 Used for wordpress permalink access
+
+#### Rewrite URLs globaly
+
+```bash
+a2enmod rewrite
+```
+
+```bash
+systemctl restart apache2
+````
 
 #### Redirect
 
@@ -804,21 +829,7 @@ ErrorDocument 404 /404/
 
 ***auto-detect-on-publish** is also possible???*
 
-### www-data
 
-#### Add User to www-data Group
-
-For being able to login via FTP , edit file , upload files , create Folders and what not...
-
-```bash
-sudo usermod -a -G www-data <User>
-```
-
-confirm `<User>` is part of www-data Group
-
-```bash
-groups <User>
-```
 
 ## Links
 
